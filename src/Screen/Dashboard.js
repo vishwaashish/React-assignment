@@ -33,6 +33,7 @@ export default function Dashboard() {
                             <div class="mb-4"><Nav/></div>
                             <h3 class="card-title text-center mb-4">Dashboard</h3>
                             <div>
+                            <div class="table-responsive">
                                 <table class="table">
                                     <thead>
                                         <tr>
@@ -56,6 +57,7 @@ export default function Dashboard() {
                                             )}
                                     </tbody>
                                 </table>
+                                </div>
 
                             </div>
                         </div>

@@ -29,8 +29,8 @@ export default function Register() {
         e.preventDefault();
         let validate = Validate(values)
 
-        if(validate?.status === 'error'){
-            alert("Please Fill all the fields")
+        if(Validategender(gender)?.status === 'error'){
+            setgender(Validategender(gender))
         }else{
             console.log(values);
             setsuccess(values);
@@ -105,7 +105,7 @@ export default function Register() {
                                         <div class="form-check form-check-inline mb-3" >
                                             <input class="form-check-input" type="radio" name="gender" id="male" value="male" onChange={(e) => {
                                                 console.log(Validategender(e.target.id));
-                                                setgender(Validategender(e.target.id))
+                                                setgender(e.target.id)
                                                 values.gender = e.target.id
                                                 setvalue({ ...values })
                                             }} />
@@ -114,7 +114,7 @@ export default function Register() {
                                         <div class="form-check form-check-inline mb-3">
                                             <input class="form-check-input" type="radio" name="gender" id="female" value="female" onChange={(e) => {
                                                 console.log(Validategender(e.target.id));
-                                                setgender(Validategender(e.target.id))
+                                                setgender(e.target.id)
                                                 values.gender = e.target.id
                                                 setvalue({ ...values })
                                             }} />

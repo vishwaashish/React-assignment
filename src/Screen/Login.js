@@ -14,6 +14,7 @@ export default function Login() {
     const [email, setemail] = useState("")
     const [password, setpassword] = useState("")
     const [success, setsuccess] = useState("")
+    const [error,seterror] = useState(true);
     const history = useHistory();
 
     useEffect(() => {
@@ -30,11 +31,12 @@ export default function Login() {
         e.preventDefault();
         if (userdaata.email === values?.email && userdaata.contact_number === values?.password) {
             setsuccess(values)
+            seterror(true)
             setTimeout(() => {
                 history.push("/dashboard")
             }, 3000)
         } else {
-            alert("Invalid Email and Password")
+            seterror(false)
             setsuccess("")
         }
     }
@@ -85,7 +87,8 @@ export default function Login() {
                                             in</button>
                                     </div>
                                     <p class="text-center mt-3">Not a member?<NavLink to="/register"> Sign up</NavLink></p>
-                                    {success != '' ? <h5 className="text-success text-center mt-3">Login Successfully</h5> : null}
+
+                                    { error? success != '' ? <h5 className="text-success text-center mt-3">Login Successfully</h5> : null : <h5 className="text-danger text-center mt-3">Login UnSuccessfully</h5>}
                                 </form>
                             </div>
                         </div>
