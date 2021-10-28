@@ -3,7 +3,6 @@
 // export const Validate = (values)=>{
 //     var checkname = /^[a-z][a-z\s]*$/;
 
-
 //     if(values?.name?.length == 0 || values?.name == undefined){
 //         return {message:"Enter name", status:"error", val : 'name'}
 //     }else if(! checkname.test(values.name)){
@@ -17,9 +16,14 @@
 //         return {message:"Email is Not Valid", status:"error", val : 'email'}
 //     }
 
-//     if(values?.phoneno?.length == 0 || values?.phoneno === undefined){
+//     var phoneno = /^[0-9\b]+$/;
+//     if(values?.phoneno.length == 0 || values?.phoneno === undefined){
 //         return {message:"Enter Phone number", status:"error", val : 'phone'}
-//     }else if( values?.phoneno?.length != 10){
+//     }
+//     else if( !phoneno.test(values?.phoneno)){
+//         return {message:"Not a valid phone number", status:"error", val : 'phone'}
+//     }
+//     else if( values?.phoneno?.length != 10 ){
 //         return {message:"Phone number is greater than 10", status:"error", val : 'phone'}
 //     }
 
@@ -36,14 +40,6 @@
 // } 
 
 
-
-export const Validate = (values)=>{
-
-    if(values?.name === undefined || values?.email === undefined || values?.phoneno === undefined || values?.gender === undefined || values?.password === undefined){
-        return {message:"Please Fill all the fields", status:"error", val : 'all'}
-    }
-
-}
 export const Validatename = (values)=>{
     var checkname = /^[a-z][a-z\s]*$/;
 
@@ -51,9 +47,8 @@ export const Validatename = (values)=>{
         return {message:"Enter name", status:"error", val : 'name'}
     }else if(! checkname.test(values)){
         return {message:"Enter Only Alpha and Space", status:"error", val : 'name'}
-    }else {
-        return {message:"Sucess", status:"success", val : 'name'}
     }
+    
 } 
 
 export const Validatemail = (values)=>{
@@ -66,9 +61,12 @@ export const Validatemail = (values)=>{
 }
 
 export const Validatephone = (values)=>{
+    var phoneno = /^[0-9\b]+$/;
     if(values?.length == 0 || values === undefined){
         return {message:"Enter Phone number", status:"error", val : 'phone'}
-    }else if( values?.length != 10){
+    }else if(! phoneno.test(values)){
+        return {message:"Not a valid phone number", status:"error", val : 'phone'}
+    }else if( values?.length != 10 ){
         return {message:"Phone number is greater than 10", status:"error", val : 'phone'}
     }
 }
@@ -80,6 +78,6 @@ export const Validategender = (values)=>{
 }
 export const Validatepassword = (values)=>{
     if(values?.length == 0 || values === undefined){
-        return {message:"Enter Password!", status:"error", val : 'gender'}
+        return {message:"Enter Password!", status:"error", val : 'password'}
     }
 }

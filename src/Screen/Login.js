@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Validatemail, Validatepassword } from "../Component/Validate";
+// import { Validate, Validatemail, Validatepassword } from "../Component/Validate";
+import { Validate, Validategender, Validatemail, Validatename, Validatepassword, Validatephone } from "../Component/Validate";
 import { getdashboardapi, userprofile } from "../Api/api";
 import { NavLink } from "react-router-dom";
 import { useHistory } from "react-router-dom";
@@ -13,8 +14,9 @@ export default function Login() {
     const [userdaata, setuserdaata] = useState("")
     const [email, setemail] = useState("")
     const [password, setpassword] = useState("")
-    const [success, setsuccess] = useState("")
-    const [error,seterror] = useState(true);
+    const [error, seterror] = useState("")
+    const [erroremail, seterroremail] = useState("")
+    const [errorpass, seterrorpass] = useState("")
     const history = useHistory();
 
     useEffect(() => {
@@ -29,18 +31,19 @@ export default function Login() {
 
     const Loginuser = (e) => {
         e.preventDefault();
-        if (userdaata.email === values?.email && userdaata.contact_number === values?.password) {
-            setsuccess(values)
-            seterror(true)
-            setTimeout(() => {
+        if (erroremail === '2' && errorpass === '2' && email?.length != 0 && password?.length != 0){
+            if (userdaata.email === values?.email && userdaata.contact_number === values?.password) {
+                alert("Login Successfully")
+                seterror("3")
                 history.push("/dashboard")
-            }, 3000)
-        } else {
-            seterror(false)
-            setsuccess("")
+            } else {
+                seterror(true)
+                alert("Invalid Credential")
+            } 
+        }else {
+            seterror("1")
         }
     }
-
     return (<>
         <div className="">
             <div class="container">
@@ -49,13 +52,23 @@ export default function Login() {
                         <div class="card border-0 shadow rounded-3 my-5">
                             <div class="card-body p-4 p-sm-5">
                                 <div class="mb-4"><Nav /></div>
+                                
                                 <h3 class="card-title text-center mb-4">Sign In</h3>
+                                {error === '1' ?
+                                    <div class="alert alert-danger" role="alert">
+                                        Please Fill All the fields
+                                    </div>
+                                    : error == '3' ? <div class="alert alert-success" role="alert">
+                                    Sucess
+                                </div> : null
+                                }
                                 <form>
                                     <div class="mb-3">
                                         <label>Email address</label>
                                         <input type="email" class="form-control" id="email" placeholder="name@example.com" onChange={(e) => {
                                             console.log(e.target.value);
                                             values.email = e.target.value
+                                            seterroremail(Validatemail(e.target.value)?.status === 'error' ? "1" : "2")
                                             setemail(Validatemail(e.target.value))
                                             setvalue({ ...values })
                                         }} />
@@ -71,6 +84,7 @@ export default function Login() {
                                         <input type="password" class="form-control" id="password" placeholder="Password"
                                             onChange={(e) => {
                                                 console.log(e.target.value);
+                                                seterrorpass(Validatepassword(e.target.value)?.status === 'error' ? "1" : "2")
                                                 setpassword(Validatepassword(e.target.value))
                                                 values.password = e.target.value
                                                 setvalue({ ...values })
@@ -83,12 +97,12 @@ export default function Login() {
                                             : null}
                                     </div>
                                     <div class="d-grid">
-                                        <button class="btn btn-primary  text-uppercase fw-bold" onClick={(e) => Loginuser(e)}>Sign
+                                        <button class="btn btn-primary  text-uppercase fw-bold" onClick={(e) => {
+                                            Loginuser(e)
+                                        }} > Sign
                                             in</button>
                                     </div>
                                     <p class="text-center mt-3">Not a member?<NavLink to="/register"> Sign up</NavLink></p>
-
-                                    { error? success != '' ? <h5 className="text-success text-center mt-3">Login Successfully</h5> : null : <h5 className="text-danger text-center mt-3">Login UnSuccessfully</h5>}
                                 </form>
                             </div>
                         </div>
